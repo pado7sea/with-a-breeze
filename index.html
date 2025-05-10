@@ -61,6 +61,8 @@
       padding: 0;
     }
     #comments li {
+  position: relative;
+  overflow: hidden;
       background: rgba(255, 255, 255, 0.08);
       margin-bottom: 1.5rem;
       padding: 1.2rem 1.5rem;
@@ -100,6 +102,11 @@
       color: #ddd;
     }
     .recent {
+  border: 2px solid transparent;
+  background: rgba(20, 20, 20, 0.8);
+  box-shadow: 0 0 20px rgba(173, 113, 255, 0.6), 0 0 40px rgba(173, 113, 255, 0.3);
+  border-image: linear-gradient(45deg, #ad71ff, #7a6df0) 1;
+}
       border: 2px solid violet;
     }
   </style>
@@ -142,7 +149,7 @@
         const ul = document.getElementById("comments");
         data.forEach(comment => {
           const li = document.createElement("li");
-          if (timeDiffHours(comment.created_at) <= 3) {
+          if (timeDiffHours(comment.created_at) <= 1) {
             li.classList.add("recent");
           }
           li.innerHTML = `
