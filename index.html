@@ -1,50 +1,77 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>with a breeze</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #333;
+      --card-bg: rgba(255, 255, 255, 0.6);
+      --border: rgba(0, 0, 0, 0.05);
+      --shadow: rgba(0, 0, 0, 0.1);
+      --glow: rgba(173, 113, 255, 0.6);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: linear-gradient(135deg, #2d2f33, #3b3c40);
+        --text: #fff;
+        --card-bg: rgba(255, 255, 255, 0.08);
+        --border: rgba(255, 255, 255, 0.2);
+        --shadow: rgba(0, 0, 0, 0.2);
+        --glow: rgba(173, 113, 255, 0.6);
+      }
+    }
+
     body {
       font-family: 'Noto Sans KR', sans-serif;
       margin: 0;
       padding: 2rem;
-      background: linear-gradient(135deg, #2d2f33, #3b3c40);
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
     }
+
     header {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: white;
+      background-color: var(--card-bg);
       padding: 2rem;
       text-align: center;
       border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 20px var(--shadow);
       backdrop-filter: blur(10px);
     }
+
     main {
       margin-top: 2rem;
       text-align: center;
       font-size: 1.2rem;
     }
+
     p {
-      color: #ccc;
+      color: var(--text);
     }
+
     .guestbook-btn {
       margin-top: 2rem;
       padding: 0.8rem 1.6rem;
       font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      color: var(--text);
+      box-shadow: 0 2px 8px var(--shadow);
       transition: all 0.2s ease;
       backdrop-filter: blur(6px);
+      cursor: pointer;
     }
+
     .guestbook-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.3);
     }
+
     #guestbook {
       margin-top: 3rem;
       text-align: left;
@@ -52,37 +79,49 @@
       margin-left: auto;
       margin-right: auto;
     }
+
     #guestbook h2 {
       text-align: center;
       margin-bottom: 1rem;
     }
+
     #comments {
       list-style: none;
       padding: 0;
     }
+
     #comments li {
-  position: relative;
-  overflow: hidden;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--card-bg);
       margin-bottom: 1.5rem;
       padding: 1.2rem 1.5rem;
       border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 25px var(--shadow);
       backdrop-filter: blur(14px);
-      color: #f0f0f0;
+      color: var(--text);
       display: flex;
       gap: 1rem;
       align-items: flex-start;
+      position: relative;
     }
+
+    .recent {
+      border-radius: 20px;
+      border: 2px solid transparent;
+      box-shadow: 0 0 12px var(--glow), 0 0 24px var(--glow);
+      border-image: linear-gradient(45deg, #ad71ff, #7a6df0) 1;
+    }
+
     .avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       border: 1px solid #fff3;
     }
+
     .comment-body {
       flex: 1;
     }
+
     .comment-meta {
       display: flex;
       align-items: center;
@@ -90,24 +129,17 @@
       margin-bottom: 0.5rem;
       font-weight: 600;
       font-size: 0.95rem;
-      color: #fff;
     }
+
     .comment-date {
       font-size: 0.8rem;
-      color: #aaa;
+      color: #888;
       font-weight: normal;
     }
+
     .comment-content {
       font-size: 0.95rem;
-      color: #ddd;
-    }
-    .recent {
-  border: 2px solid transparent;
-  background: rgba(20, 20, 20, 0.8);
-  box-shadow: 0 0 20px rgba(173, 113, 255, 0.6), 0 0 40px rgba(173, 113, 255, 0.3);
-  border-image: linear-gradient(45deg, #ad71ff, #7a6df0) 1;
-}
-      border: 2px solid violet;
+      color: var(--text);
     }
   </style>
 </head>
@@ -169,6 +201,5 @@
         console.error(err);
       });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>
