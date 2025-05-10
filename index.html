@@ -27,6 +27,20 @@
     p {
       color: #555;
     }
+    .guestbook-btn {
+      margin-top: 2rem;
+      padding: 0.8rem 1.6rem;
+      font-size: 1rem;
+      background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
+      border: 1px solid #bbb;
+      border-radius: 12px;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+    }
+    .guestbook-btn:hover {
+      background: linear-gradient(to bottom, #e4e4e4, #cfcfcf);
+    }
   </style>
 </head>
 <body>
@@ -35,6 +49,9 @@
   </header>
   <main>
     <p>바람을 따라, 마음 가는 대로 시작해봐요.</p>
+    <a href="https://github.com/pado7sea/with-a-breeze/issues/1" target="_blank">
+      <button class="guestbook-btn">방명록 남기러 가기</button>
+    </a>
   </main>
 </body>
 </html>
