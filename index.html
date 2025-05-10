@@ -68,23 +68,39 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       backdrop-filter: blur(14px);
       color: #f0f0f0;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
     }
-    #comments li strong {
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #fff3;
+    }
+    .comment-body {
+      flex: 1;
+    }
+    .comment-meta {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
-      font-size: 1rem;
-      color: #ffffff;
+      font-size: 0.95rem;
+      color: #fff;
     }
-    #comments li p {
-      margin: 0;
+    .comment-date {
+      font-size: 0.8rem;
+      color: #aaa;
+      font-weight: normal;
+    }
+    .comment-content {
       font-size: 0.95rem;
       color: #ddd;
     }
-    .icon {
-      color: #ccc;
+    .recent {
+      border: 2px solid violet;
     }
   </style>
 </head>
@@ -105,15 +121,39 @@
   </main>
 
   <script>
+    function timeDiffHours(date) {
+      const now = new Date();
+      const posted = new Date(date);
+      const diff = (now - posted) / (1000 * 60 * 60);
+      return diff;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleString("ko-KR", {
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit"
+      });
+    }
+
     fetch("https://api.github.com/repos/pado7sea/with-a-breeze/issues/1/comments")
       .then(res => res.json())
       .then(data => {
         const ul = document.getElementById("comments");
         data.forEach(comment => {
           const li = document.createElement("li");
+          if (timeDiffHours(comment.created_at) <= 3) {
+            li.classList.add("recent");
+          }
           li.innerHTML = `
-            <strong><i class="fas fa-user icon"></i> @${comment.user.login}</strong>
-            <p><i class="fas fa-comment-dots icon"></i> ${comment.body}</p>`;
+            <img class="avatar" src="${comment.user.avatar_url}" alt="${comment.user.login}">
+            <div class="comment-body">
+              <div class="comment-meta">
+                <i class="fas fa-user icon"></i> @${comment.user.login}
+                <span class="comment-date">${formatDate(comment.created_at)}</span>
+              </div>
+              <div class="comment-content">${marked.parse(comment.body)}</div>
+            </div>`;
           ul.appendChild(li);
         });
       })
@@ -122,5 +162,6 @@
         console.error(err);
       });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>
