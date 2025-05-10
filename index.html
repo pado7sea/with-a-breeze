@@ -4,20 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>with a breeze</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
       margin: 0;
       padding: 2rem;
-      background-color: #f4f4f9;
-      color: #333;
+      background: linear-gradient(135deg, #2d2f33, #3b3c40);
+      color: #fff;
     }
     header {
-      background-color: #88bdbc;
+      background-color: rgba(255, 255, 255, 0.05);
       color: white;
       padding: 2rem;
       text-align: center;
-      border-radius: 0 0 10px 10px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
     }
     main {
       margin-top: 2rem;
@@ -25,21 +28,63 @@
       font-size: 1.2rem;
     }
     p {
-      color: #555;
+      color: #ccc;
     }
     .guestbook-btn {
       margin-top: 2rem;
       padding: 0.8rem 1.6rem;
       font-size: 1rem;
-      background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
-      border: 1px solid #bbb;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
-      color: #333;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       transition: all 0.2s ease;
+      backdrop-filter: blur(6px);
     }
     .guestbook-btn:hover {
-      background: linear-gradient(to bottom, #e4e4e4, #cfcfcf);
+      background: rgba(255, 255, 255, 0.2);
+    }
+    #guestbook {
+      margin-top: 3rem;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #guestbook h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #comments {
+      list-style: none;
+      padding: 0;
+    }
+    #comments li {
+      background: rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      backdrop-filter: blur(14px);
+      color: #f0f0f0;
+    }
+    #comments li strong {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+    #comments li p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+    .icon {
+      color: #ccc;
     }
   </style>
 </head>
@@ -49,9 +94,33 @@
   </header>
   <main>
     <p>바람을 따라, 마음 가는 대로 시작해봐요.</p>
-    <a href="https://github.com/pado7sea/with-a-breeze/issues/1" target="_blank">
+    <a href="https://github.com/pado7sea/with-a-breeze/issues/1#issue-3054371026" target="_blank">
       <button class="guestbook-btn">방명록 남기러 가기</button>
     </a>
+
+    <section id="guestbook">
+      <h2>방명록</h2>
+      <ul id="comments"></ul>
+    </section>
   </main>
+
+  <script>
+    fetch("https://api.github.com/repos/pado7sea/with-a-breeze/issues/1/comments")
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById("comments");
+        data.forEach(comment => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong><i class="fas fa-user icon"></i> @${comment.user.login}</strong>
+            <p><i class="fas fa-comment-dots icon"></i> ${comment.body}</p>`;
+          ul.appendChild(li);
+        });
+      })
+      .catch(err => {
+        document.getElementById("comments").innerHTML = "<li>방명록을 불러올 수 없어요.</li>";
+        console.error(err);
+      });
+  </script>
 </body>
 </html>
